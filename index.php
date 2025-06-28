@@ -1,241 +1,176 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MateMáticos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/estilos.css">
-  <link rel="stylesheet" href="css/landing.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: linear-gradient(to right, #fce4ec, #e3f2fd);
-      font-family: 'Arial Rounded MT Bold', sans-serif;
-      margin: 0;
-    }
-    .menu {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .menu a {
-      color: #333;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: bold;
-    }
-    .hero {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 60px 40px;
-      flex-wrap: wrap;
-    }
-    .hero-left {
-      max-width: 600px;
-    }
-    .hero-left .papel {
-      background: url('img/papel.png');
-      background-size: cover;
-      padding: 30px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    .hero-right img {
-      width: 300px;
-      border: 6px solid white;
-      box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
-      border-radius: 8px;
-    }
-    .section {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      margin: 40px auto;
-      max-width: 800px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      font-family: 'Poppins', sans-serif;
     }
 
-  .tarjetas {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 40px auto;
-  flex-wrap: wrap;
-  max-width: 900px;
-}
-
-.tarjeta {
-  background-color: #fff;
-  border-radius: 20px;
-  padding: 30px 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: center;
-  width: 100%;
-  max-width: 360px;      /* Más ancha */
-  min-height: 240px;     /* Altura mínima */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s ease;
-}
-
-.tarjeta:hover {
-  transform: scale(1.03);
-}
-
-.icono {
-  font-size: 42px;
-  margin-bottom: 16px;
-}
-
-.tarjeta h3 {
-  font-size: 20px;
-  margin: 0 0 12px;
-  color: #1e293b;
-}
-
-.tarjeta p {
-  font-size: 15px;
-  color: #555;
-  margin: 0;
-  text-align: center;
-  max-width: 320px;
-  line-height: 1.4;
-}
-
-    .btn {
-      display: inline-block;
-      padding: 12px 24px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 10px;
-    }
-    .btn-empezar {
-      background: #e53935;
-      color: white;
-    }
-    .btn-miembro {
-      background: #1e88e5;
-      color: white;
+    .animate-spin-slow {
+      animation: spin 12s linear infinite;
     }
 
-    .bg-animado {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1; /* detrás de todo */
-  pointer-events: none;
-}
+    .animate-bounce-slow {
+      animation: bounce 4s infinite;
+    }
 
-.bg-animado .item {
-  position: absolute;
-  font-size: 40px;
-  opacity: 0.1;
-  animation: flotar 20s infinite linear;
-}
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
 
-@keyframes flotar {
-  0% {
-    transform: translateY(100vh) rotate(0deg);
-    opacity: 0.1;
-  }
-  100% {
-    transform: translateY(-100vh) rotate(360deg);
-    opacity: 0.15;
-  }
-}
-
-.bg-animado .item {
-  position: absolute;
-  font-size: 40px;
-  opacity: 0.5; /* Antes 0.1 */
-  animation: flotar 20s infinite linear;
-  color: #ff4081; /* puedes usar varios colores */
-}
-
-.bg-animado .item:nth-child(1) { left: 5%; animation-delay: 0s; }
-.bg-animado .item:nth-child(2) { left: 20%; animation-delay: 5s; }
-.bg-animado .item:nth-child(3) { left: 35%; animation-delay: 2s; }
-.bg-animado .item:nth-child(4) { left: 50%; animation-delay: 7s; }
-.bg-animado .item:nth-child(5) { left: 65%; animation-delay: 3s; }
-.bg-animado .item:nth-child(6) { left: 80%; animation-delay: 6s; }
-.bg-animado .item:nth-child(7) { left: 90%; animation-delay: 1s; }
-.bg-animado .item:nth-child(8) { left: 10%; animation-delay: 4s; }
-
-
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
-
 </head>
-<body>
-  <div class="bg-animado">
-  <span class="item">➕</span>
-  <span class="item">➖</span>
-  <span class="item">✖️</span>
-  <span class="item">➗</span>
-  <span class="item">3</span>
-  <span class="item">7</span>
-  <span class="item">📐</span>
-  <span class="item">📏</span>
-</div>
 
-<div class="menu">
-  <div style="font-weight: bold;">📚 MateMáticos</div>
-  <div>
-    <a href="#inicio">Inicio</a>
-    <a href="#explicacion">Explicación</a>
-    <a href="#beneficios">Beneficios</a>
-  </div>
-</div>
-
-<div class="hero" id="inicio">
-  <div class="hero-left">
-    <div class="papel">
-      <h1 style="font-size: 3rem; margin: 0;">MateMáticos</h1>
+<body class="bg-gradient-to-br from-yellow-100 via-pink-100 to-yellow-50 text-gray-800">
+  <!-- HEADER -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <div class="text-2xl font-bold text-pink-600">📚 MateMáticos</div>
+      <nav class="hidden md:flex space-x-6 font-semibold">
+        <a href="#inicio" class="hover:text-pink-600">Inicio</a>
+        <a href="#quienes" class="hover:text-pink-600">¿Quiénes somos?</a>
+        <a href="#beneficios" class="hover:text-pink-600">Beneficios</a>
+        <a href="#logros" class="hover:text-pink-600">Logros</a>
+        <a href="#relevante" class="hover:text-pink-600">Importante</a>
+      </nav>
     </div>
-    <p>¡Aprende a restar de manera divertida!</p>
-    <a href="registro.php" class="btn btn-empezar">¡Empezar ahora!</a>
-    <a href="login.php" class="btn btn-miembro">Ya soy miembro</a>
-  </div>
-  <div class="hero-right">
-    <img src="img/niño.png" alt="Niño aprendiendo">
-  </div>
-</div>
+  </header>
 
-<div class="section" id="explicacion">
-  <h2>¿Qué son las restas? 🤔</h2>
-  <p>¡La resta es como quitar cosas! Si tienes <b style="color:blue;">10 dulces</b> y te comes <b style="color:red;">3</b>, te quedan <b style="color:green;">7 dulces</b>.</p>
-  <pre style="font-size: 1.8rem; font-family: 'Courier New'; font-weight: bold; text-align: center; margin-top:20px;">
-  123456
-− 000078
- _______
-  123378
-  </pre>
-</div>
+  <!-- HERO -->
+  <section id="inicio"
+    class="relative overflow-hidden px-6 py-20 md:py-28 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+    <!-- FONDO ANIMADO -->
+    <div class="absolute inset-0 -z-10 opacity-20 pointer-events-none select-none">
+      <div class="absolute text-5xl animate-bounce top-10 left-10">➕</div>
+      <div class="absolute text-5xl animate-ping bottom-20 left-1/3">➖</div>
+      <div class="absolute text-6xl animate-spin-slow top-1/2 right-10">✖️</div>
+      <div class="absolute text-5xl animate-bounce top-5 right-1/2">📐</div>
+      <div class="absolute text-6xl animate-bounce-slow bottom-5 right-10">➗</div>
+    </div>
 
-<div class="tarjetas" id="beneficios">
-  <div class="tarjeta">
-    <div class="icono">🏆</div>
-    <h3>Progreso</h3>
-    <p>Ve tu progreso y gana puntos cada vez que resuelves correctamente</p>
-  </div>
-  <div class="tarjeta">
-    <div class="icono">💖</div>
-    <h3>Fácil de usar</h3>
-    <p>Solo usa el mouse para tocar y resolver. ¡Súper fácil!</p>
-  </div>
-  <div class="tarjeta">
-  <div class="icono">🚀</div>
-    <h3>¡Comienza tu aventura matemática!</h3>
-    <p>Únete a miles de niños que ya están aprendiendo y divirtiéndose con MateMáticos.</p>
-  </div>
-</div>
+    <!-- TEXTO -->
+    <div class="max-w-2xl text-center md:text-left">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-pink-700 leading-tight drop-shadow-md">
+        ¡Aprende a restar<br><span class="text-yellow-500">jugando y soñando!</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-700 mt-6">
+        MateMáticos es más que una plataforma: es una aventura educativa que combina diversión, tecnología y amor por
+        las matemáticas.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+        <a href="registro.php"
+          class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">¡Empezar
+          ahora!</a>
+        <a href="login.php"
+          class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all">Ya
+          soy miembro</a>
+      </div>
+    </div>
 
+    <!-- ILUSTRACIÓN CREATIVA -->
+    <div class="hidden md:flex items-center justify-center w-full max-w-sm">
+      <div
+        class="relative w-full h-64 bg-gradient-to-br from-pink-200 to-yellow-100 rounded-[1rem] shadow-2xl border-4 border-white flex flex-col justify-center items-center text-7xl transition-all duration-500 hover:scale-105 hover:rotate-1 hover:shadow-pink-300/50">
+        <div class="absolute top-3 left-5 text-sm text-gray-700 font-bold bg-white/60 px-2 py-1 rounded-full shadow-md">
+          10 🍬
+        </div>
+        <div class="text-6xl">🧮</div>
+        <div
+          class="absolute bottom-3 right-5 text-xl text-gray-700 font-bold bg-white/60 px-2 py-1 rounded-full shadow-md">
+          -3
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIÉNES SOMOS -->
+  <section id="quienes" class="bg-white py-16 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-pink-600 mb-6">¿Quiénes somos?</h2>
+      <p class="text-lg text-gray-700">
+        Somos un equipo de programadores y creativos apasionados por la enseñanza matemática infantil.
+        Creamos herramientas que despiertan la curiosidad y motivan el aprendizaje desde casa o el aula.
+      </p>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section id="beneficios" class="py-16 px-6 bg-yellow-50">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-pink-600 mb-12">Beneficios de usar MateMáticos</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-8 shadow-md text-center">
+          <div class="text-4xl mb-4">🧠</div>
+          <h3 class="text-xl font-semibold mb-2">Aprendizaje activo</h3>
+          <p>Interacción visual que estimula la mente y facilita la comprensión de la resta.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 shadow-md text-center">
+          <div class="text-4xl mb-4">🎮</div>
+          <h3 class="text-xl font-semibold mb-2">Modo juego</h3>
+          <p>¡Aprender jugando es más divertido! Sistema de puntos y logros para motivar.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 shadow-md text-center">
+          <div class="text-4xl mb-4">👨‍👩‍👧‍👦</div>
+          <h3 class="text-xl font-semibold mb-2">Familiar y seguro</h3>
+          <p>Diseñado para que padres y docentes acompañen el proceso educativo con tranquilidad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGROS -->
+  <section id="logros" class="py-16 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-pink-600 mb-12">Nuestros logros 📈</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl font-bold text-blue-500">+12K</div>
+          <p class="text-gray-700 mt-2">Usuarios activos</p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-green-500">+150K</div>
+          <p class="text-gray-700 mt-2">Ejercicios resueltos</p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-yellow-500">+98%</div>
+          <p class="text-gray-700 mt-2">Satisfacción</p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-pink-500">+300</div>
+          <p class="text-gray-700 mt-2">Escuelas registradas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELEVANTE -->
+  <section id="relevante" class="py-20 px-6 bg-pink-50">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-pink-700 mb-6">¿Por qué aprender a restar con nosotros?</h2>
+      <p class="text-lg text-gray-700 mb-4">Porque lo hacemos visual, interactivo y amigable. Aquí no hay errores que
+        duelen: ¡solo aprendizaje y diversión!</p>
+      <p class="text-lg text-gray-700">Nuestro enfoque se adapta a diferentes edades y habilidades, asegurando que cada
+        niño aprenda a su ritmo. </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-6">
+    <div class="max-w-6xl mx-auto text-center text-sm text-gray-600">
+      © 2025 MateMáticos · Todos los derechos reservados.
+    </div>
+  </footer>
 </body>
+
 </html>
