@@ -122,9 +122,68 @@
       background: #1e88e5;
       color: white;
     }
+
+    .bg-animado {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1; /* detrás de todo */
+  pointer-events: none;
+}
+
+.bg-animado .item {
+  position: absolute;
+  font-size: 40px;
+  opacity: 0.1;
+  animation: flotar 20s infinite linear;
+}
+
+@keyframes flotar {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0.15;
+  }
+}
+
+.bg-animado .item {
+  position: absolute;
+  font-size: 40px;
+  opacity: 0.5; /* Antes 0.1 */
+  animation: flotar 20s infinite linear;
+  color: #ff4081; /* puedes usar varios colores */
+}
+
+.bg-animado .item:nth-child(1) { left: 5%; animation-delay: 0s; }
+.bg-animado .item:nth-child(2) { left: 20%; animation-delay: 5s; }
+.bg-animado .item:nth-child(3) { left: 35%; animation-delay: 2s; }
+.bg-animado .item:nth-child(4) { left: 50%; animation-delay: 7s; }
+.bg-animado .item:nth-child(5) { left: 65%; animation-delay: 3s; }
+.bg-animado .item:nth-child(6) { left: 80%; animation-delay: 6s; }
+.bg-animado .item:nth-child(7) { left: 90%; animation-delay: 1s; }
+.bg-animado .item:nth-child(8) { left: 10%; animation-delay: 4s; }
+
+
   </style>
+
 </head>
 <body>
+  <div class="bg-animado">
+  <span class="item">➕</span>
+  <span class="item">➖</span>
+  <span class="item">✖️</span>
+  <span class="item">➗</span>
+  <span class="item">3</span>
+  <span class="item">7</span>
+  <span class="item">📐</span>
+  <span class="item">📏</span>
+</div>
 
 <div class="menu">
   <div style="font-weight: bold;">📚 MateMáticos</div>
