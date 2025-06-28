@@ -8,8 +8,8 @@ if (isset($_SESSION['mensaje'])) {
   header("Location: " . $_SERVER['PHP_SELF']);
   exit;
 }
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $nombre = trim($_POST["nombre"]);
   $email = trim($_POST["email"]);
   $password = $_POST["password"];
@@ -28,10 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $sql = "INSERT INTO users (nombre, email, password_hash) VALUES (?, ?, ?)";
       $stmt = $conn->prepare($sql);
       if ($stmt->execute([$nombre, $email, $password_hash])) {
-        // FUNCTION TO CONTINUE THE FLOW
-
-        $_SESSION["user_id"] = $usuario["id"];
-        $_SESSION["nombre"] = $usuario["nombre"];
+        $_SESSION["user_id"] = $conn->lastInsertId();
+        $_SESSION["nombre"] = $nombre;
         header("Location: dashboard.php");
         exit;
       } else {
@@ -40,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
   }
 
-  if($mensaje) {
+  if ($mensaje) {
     $_SESSION['mensaje'] = $mensaje;
   }
 }
@@ -49,41 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
   $mensaje = '';
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <title>Registro - MateMáticos</title>
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #fce4ec, #e3f2fd);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .registro-container {
-      background-color: #fff;
-      border-radius: 30px;
-      padding: 40px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      width: 400px;
-      text-align: center;
-    }
-
-    .iconos {
-      font-size: 24px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 25px;
-      animation: flotar 3s infinite ease-in-out;
     }
 
     @keyframes flotar {
@@ -94,102 +69,106 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
       }
 
       50% {
-        transform: translateY(-5px);
+        transform: translateY(-6px);
       }
     }
 
-    .registro-container h2 {
-      font-size: 28px;
-      color: #845ec2;
-      margin: 12px 0;
+    .anim-float {
+      animation: flotar 3s infinite ease-in-out;
     }
-
-    .registro-container p {
-      font-size: 15px;
-      color: #333;
-      margin-bottom: 30px;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 18px;
-      border-radius: 15px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-
-    form {
-      padding-bottom: 15px;
-    }
-
-    button {
-      width: 100%;
-      background: linear-gradient(to right, #667eea, #764ba2);
-      color: white;
-      padding: 14px;
-      border: none;
-      border-radius: 15px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-sizing: border-box;
-    }
-
-    button:hover {
-      background: linear-gradient(to right, #43e97b, #38f9d7);
-    }
-
-    .link {
-      margin-top: 15px;
-      font-size: 14px;
-      display: block;
-      color: #007bff;
-    }
-
-    .mensaje {
-      margin-bottom: 15px;
-      font-weight: bold;
-      color: #d9534f;
-    }
-
   </style>
 </head>
 
-<body>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-100 via-pink-100 to-yellow-50 px-4">
 
-  <div class="registro-container">
-    <div class="iconos">
-      <span>⭐</span>
-      <span>🧮</span>
-      <span>❤️</span>
-      <span>✨</span>
+  <div class="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-md text-center relative">
+    <!-- Emojis flotantes -->
+    <div class="flex justify-center space-x-4 text-2xl mb-6 anim-float">
+      <span>⭐</span><span>🧮</span><span>❤️</span><span>✨</span>
     </div>
-    <h2>MateMáticos</h2>
-    <p>¡Crea tu cuenta para empezar!</p>
+
+    <h2 class="text-3xl font-bold text-pink-600 mb-2">MateMáticos</h2>
+    <p class="text-gray-700 mb-6">¡Crea tu cuenta para empezar!</p>
 
     <?php if ($mensaje): ?>
-      <div class="mensaje <?= str_contains($mensaje, 'exitoso') ? 'exito' : '' ?>"><?= $mensaje ?></div>
+      <div class="mb-4 text-sm font-semibold text-red-500 bg-red-100 py-2 px-4 rounded-xl">
+        <?= $mensaje ?>
+      </div>
     <?php endif; ?>
 
-    <form method="POST" action="">
-      <input type="text" name="nombre" placeholder="Escribe tu nombre" required>
-      <input type="email" name="email" placeholder="Correo electrónico" required>
-      <input type="password" name="password"
-        placeholder="Escribe tu contraseña"
+    <form method="POST" action="" class="space-y-4 text-left" onsubmit="return validarFormulario()">
+      <input
+        type="text"
+        name="nombre"
+        placeholder="Escribe tu nombre completo"
         required
-        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$"
-        title="Debe tener al menos 7 caracteres, una letra y un número.">
-      <button type="submit">👤 ¡Crear cuenta!</button>
+        class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
+
+      <input
+        type="email"
+        name="email"
+        placeholder="Correo electrónico"
+        required
+        class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
+
+      <div class="relative">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Escribe tu contraseña"
+          required
+          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$"
+          title="Debe tener al menos 7 caracteres, una letra y un número."
+          class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
+        <span onclick="togglePassword('password')" class="absolute top-3 right-4 cursor-pointer text-gray-500 text-xl">👁️</span>
+      </div>
+
+      <div class="relative">
+        <input
+          type="password"
+          id="confirmar"
+          placeholder="Confirmar contraseña"
+          required
+          class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
+        <span onclick="togglePassword('confirmar')" class="absolute top-3 right-4 cursor-pointer text-gray-500 text-xl">👁️</span>
+      </div>
+
+      <!-- ⚠️ Mensaje visual si no coinciden -->
+      <div id="mensajeError" class="text-red-500 text-sm font-semibold hidden">
+        Las contraseñas no coinciden.
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-green-400 hover:to-teal-400 text-white font-bold py-3 rounded-xl shadow-lg transition-all">
+        ¡Crear cuenta!
+      </button>
     </form>
 
-    <a class="link" href="login.php">¿Ya tienes cuenta? ¡Inicia sesión!</a>
+    <a href="login.php" class="block mt-6 text-sm text-blue-600 hover:underline">¿Ya tienes cuenta? ¡Inicia sesión!</a>
   </div>
+
+  <script>
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function validarFormulario() {
+      const pass = document.getElementById("password").value;
+      const confirm = document.getElementById("confirmar").value;
+      const mensaje = document.getElementById("mensajeError");
+
+      if (pass !== confirm) {
+        mensaje.classList.remove("hidden");
+        return false;
+      } else {
+        mensaje.classList.add("hidden");
+        return true;
+      }
+    }
+  </script>
 
 </body>
 
