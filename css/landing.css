@@ -1,0 +1,37 @@
+.bold.title{
+    color: rgba(221, 0, 255, 1);
+    font-size: 4.5rem;
+}
+
+header {
+  margin-top: 40px;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.btn-empezar {
+  display: block;
+  margin: 10px auto;
+  padding: 12px 20px;
+  background-color: #00cfc8;
+  color: white;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-miembro {
+  display: block;
+  margin: 10px auto;
+  padding: 12px 20px;
+  border: 2px solid #3b3bff;
+  color: #3b3bff;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+}
