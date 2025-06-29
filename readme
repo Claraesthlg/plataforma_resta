@@ -1,0 +1,7 @@
+run `docker compose up` in the console to build the images and create the container in docker
+
+
+enter in the mariadb container and use the plataforma_resta database
+run the queries in ./sql in the mariadb container console
+
+navigate to http://localhost:8080/index.php

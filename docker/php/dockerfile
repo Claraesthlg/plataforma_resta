@@ -1,0 +1,8 @@
+FROM php:7.4-apache
+
+RUN docker-php-ext-install curl gd mbstring mysqli pdo pdo_mysql xml
+COPY ../../ /var/www/html/
+
+EXPOSE 8080
+
+# CMD ["php", "./index.php"]
