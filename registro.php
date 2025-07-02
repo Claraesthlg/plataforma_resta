@@ -1,5 +1,7 @@
 <?php
 require_once 'db/conexion.php';
+require_once 'db/generator.php';
+
 session_start();
 $mensaje = null;
 
@@ -14,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $email = trim($_POST["email"]);
   $password = $_POST["password"];
 
-  if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/', $password)) {
+  if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d).{7,}$/', $password)) {
     $mensaje = "La contraseña debe tener al menos 7 caracteres, una letra y un número.";
   } else {
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -30,6 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       if ($stmt->execute([$nombre, $email, $password_hash])) {
         $_SESSION["user_id"] = $conn->lastInsertId();
         $_SESSION["nombre"] = $nombre;
+        generateExcercices($_SESSION["user_id"], $conn);
+
         header("Location: dashboard.php");
         exit;
       } else {
@@ -118,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
           name="password"
           placeholder="Escribe tu contraseña"
           required
-          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$"
+          pattern="^(?=.*[A-Za-z])(?=.*\d).{7,}$"
           title="Debe tener al menos 7 caracteres, una letra y un número."
           class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
         <span onclick="togglePassword('password')" class="absolute top-3 right-4 cursor-pointer text-gray-500 text-xl">👁️</span>
