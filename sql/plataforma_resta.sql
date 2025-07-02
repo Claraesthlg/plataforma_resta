@@ -13,15 +13,18 @@ CREATE TABLE exercises (
   id INT AUTO_INCREMENT PRIMARY KEY,
   numero_mayor INT NOT NULL,
   numero_menor INT NOT NULL,
-  resultado_correcto INT NOT NULL
+  result INT NOT NULL,
+  completed TINYINT(1) DEFAULT 0,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE user_exercises (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  ejercicio_id INT NOT NULL,
-  correcto BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (ejercicio_id) REFERENCES exercises(id)
-);
+-- CREATE TABLE user_exercises (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   user_id INT NOT NULL,
+--   ejercicio_id INT NOT NULL,
+--   correcto BOOLEAN DEFAULT FALSE,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (user_id) REFERENCES users(id),
+--   FOREIGN KEY (ejercicio_id) REFERENCES exercises(id)
+-- );

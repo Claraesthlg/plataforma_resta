@@ -1,4 +1,8 @@
 <?php
+///// variables for docker  ////
+// $host = "mariadb";
+// $pass = "clara";
+
 $host = "localhost";
 $db = "plataforma_resta";
 $user = "root";
@@ -10,5 +14,3 @@ try {
 } catch (PDOException $e) {
     die("Error de conexión: " . $e->getMessage());
 }
-
-

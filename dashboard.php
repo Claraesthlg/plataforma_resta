@@ -12,6 +12,7 @@ $user_id = $_SESSION['user_id'];
 $nombre = $_SESSION['nombre'] ?? 'Usuario';
 
 if (isset($_GET['reiniciar']) && $_GET['reiniciar'] === '1') {
+    resetExercises($user_id, $conn);
     generateExcercices($user_id, $conn);
     header("Location: dashboard.php");
     exit();
@@ -227,7 +228,7 @@ $progreso = $stmtCompletados->fetchColumn();
         function verificarRespuesta() {
             const respuestaFinal = respuesta.join('');
             if (respuestaFinal === resultado.toString()) {
-                fetch(`resolver.php?id=${idActual}&completo=1`)
+                fetch(`controller/resolver.php?id=${idActual}&completo=1`)
                     .then(() => location.reload());
             } else {
                 alert("¡Ups! Intenta otra vez.");

@@ -1,0 +1,23 @@
+services:
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: clara
+      MARIADB_USER: root
+      MARIADB_PASSWORD: clara
+      MARIADB_DATABASE: plataforma_resta
+    ports:
+      - 3306:3306
+  apache:
+    build: ./docker/php
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_USER: root
+      MYSQL_PASSWORD:
+      MYSQL_DB: plataforma_resta
+
+    
