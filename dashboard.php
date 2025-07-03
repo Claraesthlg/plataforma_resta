@@ -219,8 +219,10 @@ $progreso = $stmtCompletados->fetchColumn();
         }
 
         function verificarRespuesta() {
-            const respuestaFinal = respuesta.join('');
-            if (respuestaFinal === resultado) {
+            const respuestaFinal = respuesta.join('').replace(/^0+/, '');
+            const resultadoEsperado = resultado.replace(/^0+/, '');
+
+            if (respuestaFinal === resultadoEsperado) {
                 Swal.fire({
                     title: '¡Buen trabajo!',
                     text: '¡Resolviste el ejercicio correctamente!',
