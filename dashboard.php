@@ -127,40 +127,74 @@ $progreso = $stmtCompletados->fetchColumn();
         let respuesta = [];
 
         function abrirModal(id, mayor, menor, res) {
+            document.getElementById('cardsContainer').classList.add('hidden');
+
             idActual = id;
+            resultado = res;
             const len = Math.max(mayor.length, menor.length, res.length);
-            resultado = res.padStart(len, '0');
-            const mayorPadded = mayor.padStart(len, '0');
-            const menorPadded = menor.padStart(len, '0');
             respuesta = Array(len).fill(0);
+
 
             const container = document.getElementById('operacion');
             const wrapper = document.getElementById('inputsWrapper');
-            const digitosMayor = [...mayorPadded];
-            const digitosMenor = [...menorPadded];
 
-            container.innerHTML = '<div class="flex justify-end gap-[13px] mb-1 fila-llevadas text-xs text-blue-600 font-bold"></div><div class="flex justify-end gap-[13px] mb-1 fila-mayor"></div><div class="flex justify-end gap-[13px] mb-1 fila-menor text-pink-600 font-bold">-</div><hr class="border-t-2 border-black my-2">';
+            const digitosMayor = [...mayor];
+            const digitosMenor = [...menor];
+
+            container.innerHTML = `
+  <div class="flex justify-end gap-[13px] mb-1 fila-llevadas text-xs text-blue-600 font-bold"></div>
+  <div class="flex justify-end gap-[13px] mb-1 fila-mayor"></div>
+  <div class="flex justify-end gap-[13px] mb-1 fila-menor text-pink-600 font-bold">-</div>
+  <hr class="border-t-2 border-black my-2">
+`;
 
             const filaLlevadas = container.querySelector('.fila-llevadas');
             const filaMayor = container.querySelector('.fila-mayor');
             const filaMenor = container.querySelector('.fila-menor');
 
+            const spansLlevadas = [];
+            const spansMayor = [];
+            const spansMenor = [];
+
+            // Array para registrar llevadas manuales
+            const llevando = Array(len).fill(false);
+
             for (let i = 0; i < len; i++) {
+                // Llevadas
                 const spanL = document.createElement('span');
                 spanL.className = 'w-6 text-center';
+                spanL.textContent = '';
+                spansLlevadas.push(spanL);
                 filaLlevadas.appendChild(spanL);
 
+                // Mayor (click para prestar)
                 const spanM = document.createElement('span');
-                spanM.className = 'w-6 text-center font-semibold';
+                spanM.className = 'w-6 text-center cursor-pointer font-semibold';
                 spanM.textContent = digitosMayor[i];
+                spanM.dataset.index = i;
+
+                spanM.onclick = () => {
+                    const idx = parseInt(spanM.dataset.index);
+                    if (idx < len - 1) {
+                        llevando[idx + 1] = true;
+                        spansLlevadas[idx + 1].textContent = '1';
+                        spansLlevadas[idx + 1].classList.add('text-blue-600');
+                        spanM.classList.add('bg-yellow-200', 'rounded');
+                    }
+                };
+
+                spansMayor.push(spanM);
                 filaMayor.appendChild(spanM);
 
+                // Menor
                 const spanN = document.createElement('span');
                 spanN.className = 'w-6 text-center';
                 spanN.textContent = digitosMenor[i];
+                spansMenor.push(spanN);
                 filaMenor.appendChild(spanN);
             }
 
+            // Inputs
             wrapper.innerHTML = '';
             respuesta.forEach((_, i) => {
                 const btn = document.createElement('div');
@@ -181,6 +215,7 @@ $progreso = $stmtCompletados->fetchColumn();
 
         function cerrarModal() {
             document.getElementById('modalEjercicio').classList.add('hidden');
+            document.getElementById('cardsContainer').classList.remove('hidden');
         }
 
         function verificarRespuesta() {
@@ -227,6 +262,7 @@ $progreso = $stmtCompletados->fetchColumn();
                         .then(() => {
                             cerrarModal();
                             marcarEjercicioResuelto(idActual);
+                            location.reload()
                         });
                 });
             } else {

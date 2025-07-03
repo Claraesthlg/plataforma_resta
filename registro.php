@@ -125,7 +125,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
           pattern="^(?=.*[A-Za-z])(?=.*\d).{7,}$"
           title="Debe tener al menos 7 caracteres, una letra y un número."
           class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
-        <span onclick="togglePassword('password')" class="absolute top-3 right-4 cursor-pointer text-gray-500 text-xl">👁️</span>
+        <button type="button" onclick="togglePassword('password', this)" class="absolute top-3 right-4 text-gray-500 hover:text-pink-500 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </button>
       </div>
 
       <div class="relative">
@@ -135,8 +140,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
           placeholder="Confirmar contraseña"
           required
           class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
-        <span onclick="togglePassword('confirmar')" class="absolute top-3 right-4 cursor-pointer text-gray-500 text-xl">👁️</span>
+        <button type="button" onclick="togglePassword('confirmar', this)" class="absolute top-3 right-4 text-gray-500 hover:text-pink-500 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </button>
       </div>
+
 
       <!-- ⚠️ Mensaje visual si no coinciden -->
       <div id="mensajeError" class="text-red-500 text-sm font-semibold hidden">
@@ -154,9 +165,17 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
   </div>
 
   <script>
-    function togglePassword(id) {
+    function togglePassword(id, btn) {
       const input = document.getElementById(id);
-      input.type = input.type === "password" ? "text" : "password";
+      const isVisible = input.type === "text";
+      input.type = isVisible ? "password" : "text";
+
+      const svg = btn.querySelector("svg");
+      svg.innerHTML = isVisible ?
+        `<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+         <circle cx="12" cy="12" r="3" />` :
+        `<path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.06 20.06 0 0 1 5.06-5.94M3 3l18 18" />
+         <path d="M15 9.34a4 4 0 0 1-5.66 5.66" />`;
     }
 
     function validarFormulario() {
