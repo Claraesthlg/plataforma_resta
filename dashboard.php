@@ -91,7 +91,13 @@ $progreso = $stmtCompletados->fetchColumn();
                             <span class="inline-block w-6 h-6 border-b-2 border-gray-400"></span>
                         <?php endfor; ?>
                         <?php if ($completado): ?>
-                            <span class="text-green-500 text-xl ml-2">✅</span>
+                            <span class="text-green-500 text-xl ml-2">
+                                <div class="ml-2 w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-500 bg-green-100">
+                                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </span>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -100,7 +106,7 @@ $progreso = $stmtCompletados->fetchColumn();
     </main>
 
     <footer class="bg-white border-t border-gray-200 py-4 text-center text-sm text-gray-600">
-        © 2025 MateMáticos · Con cariño para mentes brillantes 💖
+        © 2025 MateMáticos · Con cariño para mentes brillantes
     </footer>
 
     <div id="modalEjercicio" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50 p-4 sm:p-6">
@@ -182,7 +188,7 @@ $progreso = $stmtCompletados->fetchColumn();
             if (respuestaFinal === resultado) {
                 Swal.fire({
                     title: '¡Buen trabajo!',
-                    text: '¡Resolviste el ejercicio correctamente! 🎉',
+                    text: '¡Resolviste el ejercicio correctamente!',
                     icon: 'success',
                     confirmButtonText: '¡Seguir jugando!',
                     background: '#fff8e7',
@@ -251,12 +257,20 @@ $progreso = $stmtCompletados->fetchColumn();
         function marcarEjercicioResuelto(id) {
             const card = document.getElementById('card-' + id);
             if (!card) return;
+
             card.removeAttribute('onclick');
             card.classList.remove('hover:ring-4', 'hover:ring-pink-300', 'cursor-pointer');
             card.classList.add('opacity-50', 'pointer-events-none', 'border-green-300');
-            const check = document.createElement('span');
-            check.textContent = '✅';
-            check.className = 'text-green-500 text-xl ml-2';
+
+            const check = document.createElement('div');
+            check.innerHTML = `
+      <div class="ml-2 w-6 h-6 flex items-center justify-center rounded-full border-2 border-green-500 bg-green-100">
+        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+    `;
+
             const resultContainer = card.querySelector('.flex.justify-center');
             if (resultContainer) {
                 resultContainer.appendChild(check);
