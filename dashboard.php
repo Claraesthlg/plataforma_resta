@@ -106,7 +106,7 @@ $progreso = $stmtCompletados->fetchColumn();
     </main>
 
     <footer class="bg-white border-t border-gray-200 py-4 text-center text-sm text-gray-600">
-        © 2025 MateMáticos · Con cariño para mentes brillantes
+        © 2025 MateMáticos · Todos los derechos reservados.
     </footer>
 
     <div id="modalEjercicio" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50 p-4 sm:p-6">

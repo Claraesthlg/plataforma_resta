@@ -84,7 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 </head>
 
 <body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-100 via-pink-100 to-yellow-50 px-4">
-
+  <a href="index.php" class="absolute top-5 left-5 flex items-center space-x-2 bg-white/80 text-pink-600 hover:text-pink-800 font-semibold px-4 py-2 rounded-xl shadow-md backdrop-blur transition">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L4.414 9H16a1 1 0 110 2H4.414l3.293 3.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+    </svg>
+    <span>Volver</span>
+  </a>
   <div class="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-md text-center relative">
     <!-- Emojis flotantes -->
     <div class="flex justify-center space-x-4 text-2xl mb-6 anim-float">
@@ -192,7 +197,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
       }
     }
   </script>
-
+  <footer class="absolute bottom-4 w-full text-center text-sm text-gray-500">
+    © 2025 <span class="font-semibold text-pink-600">MateMáticos</span> · Todos los derechos reservados.
+  </footer>
 </body>
 
 </html>
