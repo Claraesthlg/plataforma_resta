@@ -55,6 +55,12 @@ $progreso = $stmtCompletados->fetchColumn();
             @apply bg-pink-100 cursor-pointer;
         }
     </style>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Confetti JS -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -64,7 +70,7 @@ $progreso = $stmtCompletados->fetchColumn();
         <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
             <h1 class="text-xl font-bold text-pink-600">📚 MateMáticos</h1>
             <div class="flex items-center gap-4">
-                <span class="text-sm md:text-base font-medium text-gray-800">¡Hola, <?= htmlspecialchars($nombre) ?>! 🎉</span>
+                <span class="text-sm md:text-base font-medium text-gray-800">¡Hola, <?= htmlspecialchars($nombre) ?>! </span>
                 <a href="dashboard.php?reiniciar=1" class="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">🔁 Nuevos Ejercicios</a>
                 <a href="logout.php" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Cerrar sesión</a>
             </div>
@@ -107,7 +113,7 @@ $progreso = $stmtCompletados->fetchColumn();
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 py-4 text-center text-sm text-gray-600">
-        © 2025 MateMáticos · Con cariño para mentes brillantes 💖
+        © 2025 MateMáticos · Con cariño para mentes brillantes
     </footer>
 
     <!-- Modal -->
@@ -228,10 +234,67 @@ $progreso = $stmtCompletados->fetchColumn();
         function verificarRespuesta() {
             const respuestaFinal = respuesta.join('');
             if (respuestaFinal === resultado.toString()) {
-                fetch(`controller/resolver.php?id=${idActual}&completo=1`)
-                    .then(() => location.reload());
+                // 🎊 Confetti y Swal
+                Swal.fire({
+                    title: '¡Buen trabajo!',
+                    text: '¡Resolviste el ejercicio correctamente! 🎉',
+                    icon: 'success',
+                    confirmButtonText: '¡Seguir jugando!',
+                    background: '#fff8e7',
+                    color: '#d63384',
+                    customClass: {
+                        popup: 'rounded-3xl shadow-xl border-2 border-pink-200',
+                        title: 'text-3xl font-bold text-pink-600',
+                        htmlContainer: 'text-lg text-gray-700 font-semibold',
+                        confirmButton: 'bg-pink-500 text-white px-6 py-2 rounded-xl hover:bg-pink-600 transition-all'
+                    },
+                    didOpen: () => {
+                        // 🎉 lanzar confetti
+                        const duration = 1.5 * 1000;
+                        const end = Date.now() + duration;
+
+                        (function frame() {
+                            confetti({
+                                particleCount: 5,
+                                angle: 60,
+                                spread: 55,
+                                origin: {
+                                    x: 0
+                                },
+                                colors: ['#f472b6', '#fcd34d', '#60a5fa'],
+                            });
+                            confetti({
+                                particleCount: 5,
+                                angle: 120,
+                                spread: 55,
+                                origin: {
+                                    x: 1
+                                },
+                                colors: ['#f472b6', '#fcd34d', '#60a5fa'],
+                            });
+                            if (Date.now() < end) {
+                                requestAnimationFrame(frame);
+                            }
+                        })();
+                    }
+                }).then(() => {
+                    fetch(`controller/resolver.php?id=${idActual}&completo=1`)
+                        .then(() => location.reload());
+                });
             } else {
-                alert("¡Ups! Intenta otra vez.");
+                Swal.fire({
+                    title: '¡Ups!',
+                    text: '¡Inténtalo de nuevo!',
+                    icon: 'error',
+                    confirmButtonText: 'Reintentar',
+                    background: '#fff1f2',
+                    color: '#be123c',
+                    customClass: {
+                        popup: 'rounded-3xl shadow-xl border border-red-200',
+                        title: 'text-2xl font-bold text-red-600',
+                        confirmButton: 'bg-red-500 text-white px-5 py-2 rounded-xl hover:bg-red-600 transition-all'
+                    }
+                });
             }
         }
     </script>
