@@ -3,10 +3,15 @@
 // $host = "mariadb";
 // $pass = "clara";
 
+// $host = "localhost";
+// $db = "plataforma_resta";
+// $user = "root";
+// $pass = "";
+
 $host = "localhost";
-$db = "plataforma_resta";
-$user = "root";
-$pass = "";
+$db = "pwgrupo5_clara";
+$user = "pwgrupo5_clara";
+$pass = "123456Rojo123.%#";
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
