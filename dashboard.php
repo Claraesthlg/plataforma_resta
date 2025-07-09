@@ -49,6 +49,10 @@ $progreso = $stmtCompletados->fetchColumn();
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(to bottom right, #ffe6e6, #fff4d6);
         }
+
+        #inputsWrapper {
+            margin-left: 1.5rem;
+        }
     </style>
 </head>
 
@@ -110,8 +114,8 @@ $progreso = $stmtCompletados->fetchColumn();
         © 2025 MateMáticos · Todos los derechos reservados.
     </footer>
 
-    <div id="modalEjercicio" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50 p-4 sm:p-6">
-        <div class="bg-white rounded-3xl shadow-xl p-6 w-full max-w-4xl relative">
+    <div id="modalEjercicio" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center text-center hidden z-50 p-4 sm:p-6">
+        <div class="bg-white rounded-3xl shadow-xl p-6 w-full max-w-4xl relative flex flex-col items-center justify-center text-center">
             <button onclick="cerrarModal()" class="absolute top-2 right-3 text-red-500 font-bold text-2xl">×</button>
             <h2 class="text-2xl font-bold text-center text-pink-600 mb-4">Resuelve el ejercicio</h2>
             <div id="operacion" class="text-right font-mono text-2xl mb-4"></div>
@@ -177,10 +181,17 @@ $progreso = $stmtCompletados->fetchColumn();
                 spanM.onclick = () => {
                     const idx = parseInt(spanM.dataset.index);
                     if (idx < len - 1) {
-                        llevando[idx + 1] = true;
-                        spansLlevadas[idx + 1].textContent = '1';
-                        spansLlevadas[idx + 1].classList.add('text-blue-600');
-                        spanM.classList.add('bg-yellow-200', 'rounded');
+                        llevando[idx + 1] = !llevando[idx + 1];
+
+                        if (llevando[idx + 1]) {
+                            spansLlevadas[idx + 1].textContent = '1';
+                            spansLlevadas[idx + 1].classList.add('text-blue-600');
+                            spanM.classList.add('bg-yellow-200', 'rounded');
+                        } else {
+                            spansLlevadas[idx + 1].textContent = '';
+                            spansLlevadas[idx + 1].classList.remove('text-blue-600');
+                            spanM.classList.remove('bg-yellow-200', 'rounded');
+                        }
                     }
                 };
 
@@ -224,6 +235,8 @@ $progreso = $stmtCompletados->fetchColumn();
             const resultadoEsperado = resultado.replace(/^0+/, '');
 
             if (respuestaFinal === resultadoEsperado) {
+                document.getElementById('sound-success').play();
+
                 Swal.fire({
                     title: '¡Buen trabajo!',
                     text: '¡Resolviste el ejercicio correctamente!',
@@ -269,6 +282,8 @@ $progreso = $stmtCompletados->fetchColumn();
                         });
                 });
             } else {
+                document.getElementById('sound-error').play();
+
                 const card = document.querySelector(`[onclick*="abrirModal(${idActual},"]`);
                 if (card) {
                     card.classList.add('border-red-400', 'ring-2', 'ring-red-300');
@@ -316,6 +331,9 @@ $progreso = $stmtCompletados->fetchColumn();
             }
         }
     </script>
+    <audio id="sound-success" src="assets/sounds/good.mp3"></audio>
+    <audio id="sound-error" src="assets/sounds/error.mp3"></audio>
+
 </body>
 
 </html>
